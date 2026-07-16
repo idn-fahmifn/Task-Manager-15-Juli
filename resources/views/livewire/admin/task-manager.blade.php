@@ -1,4 +1,4 @@
-    <div class="p-6 space-y-6" x-data="{showModal: false}">
+    <div class="p-6 space-y-6">
 
         <div class="flex justify-between">
             <div class="">
@@ -6,7 +6,7 @@
                 <flux:text class="mt-1">Semua data tugas (Tasks)</flux:text>
             </div>
             <div class="">
-                <flux:button variant="primary" icon="plus-circle" @click="showModal = true">Buat</flux:button>
+                <flux:button variant="primary" icon="plus-circle" wire:click="create" >Buat</flux:button>
             </div>
         </div>
 
@@ -39,6 +39,7 @@
                         <th class="px-5 py-3">Nama Task</th>
                         <th class="px-5 py-3">Ditugaskan</th>
                         <th class="px-5 py-3">Prioritas</th>
+                        <th class="px-5 py-3">#</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
@@ -50,6 +51,14 @@
                         <td class="px-5 py-3 font-medium">{{$task->title}}</td>
                         <td class="px-5 py-3 font-medium">{{$task->assignee->name }}</td>
                         <td class="px-5 py-3 font-medium">{{$task->priority}}</td>
+                        <td class="px-5 py-3 font-medium">
+                            <div class="flex justify-start gap-1">
+                                <flux:button icon="pencil" variant="ghost" wire:click="edit({{$task->id}})">
+                                </flux:button>
+                                <flux:button icon="trash" variant="ghost" wire:confirm="Yakin mau dihapus?"
+                                    wire:click="delete({{$task->id}})"></flux:button>
+                            </div>
+                        </td>
                     </tr>
                     @empty
 
@@ -62,7 +71,9 @@
                 </tbody>
             </table>
         </div>
-        <div x-show="showModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+
+        @if ($showModal)
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
             x-on:click.self="showModal = false">
             <div class="w-full max-w-lg rounded-lg bg-white dark:bg-neutral-700 p-6 space-y-4 shadow-lg">
                 <flux:heading size="xl"> Task Baru </flux:heading>
@@ -117,12 +128,16 @@
 
                     <div class="py-2 mt-2">
                         <flux:button variant="primary" @click="showModal = false">Batal</flux:button>
-                        <flux:button variant="primary" @click="showModal = false" wire:click="save">Buat Task</flux:button>
+                        <flux:button variant="primary" @click="showModal = false" wire:click="save">Buat Task
+                        </flux:button>
                     </div>
                 </form>
 
             </div>
         </div>
+        @endif
+
+
     </div>
 
     <!-- modal area -->

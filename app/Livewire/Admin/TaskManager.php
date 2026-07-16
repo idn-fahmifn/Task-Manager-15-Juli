@@ -11,6 +11,7 @@ class Taskmanager extends Component
 {
 
     public bool $showModal = false;
+    public ?int $editingId = null;
 
     #[Validate('required|string|max:100')]
     public string $title = '';
@@ -30,7 +31,7 @@ class Taskmanager extends Component
 
     public function create()
     {
-        // 
+        $this->showModal = true; 
     }
 
     public function edit(Task $task)
