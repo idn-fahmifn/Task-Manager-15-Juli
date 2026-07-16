@@ -1,4 +1,3 @@
-
     <div class="p-6 space-y-6" x-data="{showModal: false}">
 
         <div class="flex justify-between">
@@ -46,12 +45,19 @@
 
                     
 
-                   
+                    @forelse ($tasks as $task)
+                    <tr>
+                        <td class="px-5 py-3 font-medium">{{$task->nama_task}}</td>
+                        <td class="px-5 py-3 font-medium">{{$task->status}}</td>
+                        <td class="px-5 py-3 font-medium">{{$task->prioritas}}</td>
+                    </tr>
+                    @empty
 
                     <tr>
-                        <td class="px-5 py-3 font-medium text-center">Belum ada Task</td>
+                        <td colspan="3" class="px-5 py-3 font-medium text-center">Belum ada Task</td>
                     </tr>
 
+                    @endforelse
 
                 </tbody>
             </table>
@@ -64,25 +70,57 @@
 
                 <form action="">
                     <div class="py-2 mt-2">
-                        <flux:input label="Judul Task" name="title" required placeholder="Masukan nama task" />
+                        <flux:input label="Judul Task" wire:model="title" required placeholder="Masukan nama task" />
+                        @error('title')
+                            <span class="text-red-500">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="py-2 mt-2">
-                        <flux:select label="Prioritas" name="priority">
-                            <option value="low">low</option>
-                            <option value="medium">medium</option>
-                            <option value="high">High</option>
+                        <flux:select label="Tugaskan Ke" wire:model="assign_to">
+                            @foreach ($members as $member)
+                                <option value="{{$member->id}}">{{$member->name}}</option>
+                            @endforeach
                         </flux:select>
+                        @error('assign_to')
+                            <span class="text-red-500">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="py-2 mt-2">
-                        <flux:textarea label="Deskripsi Tugas" name="desc"></flux:textarea>
+                        <flux:select label="Prioritas" wire:model="priority">
+                            @foreach ($priorities as $key => $label)
+                                <option value="{{$key}}">{{$label}}</option>
+                            @endforeach
+                        </flux:select>
+                        @error('priority')
+                            <span class="text-red-500">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="py-2 mt-2">
+                        <flux:select label="Status" wire:model="status">
+                            @foreach ($statuses as $key => $label)
+                                <option value="{{$key}}">{{$label}}</option>
+                            @endforeach
+                        </flux:select>
+                        @error('status')
+                            <span class="text-red-500">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="py-2 mt-2">
+                        <flux:textarea label="Deskripsi Tugas" wire:model="desc"></flux:textarea>
+                        @error('desc')
+                            <span class="text-red-500">{{$message}}</span>
+                        @enderror
                     </div>
 
                     <div class="py-2 mt-2">
                         <flux:button variant="primary" @click="showModal = false" >Batal</flux:button>
-                        <flux:button type="submit" variant="primary">Buat Task</flux:button>
+                        <flux:button variant="primary" wire:click="save">Buat Task</flux:button>
                     </div>
                 </form>
 
             </div>
         </div>
     </div>
+
+    <!-- modal area -->
+
