@@ -41,7 +41,8 @@ class Taskmanager extends Component
     public function save() :void
     {
         $data = $this->validate();
-        dd($this);
+        Task::create($data);
+        session()->flash('message', 'Task berhasil disimpan');
     }
 
     public function delete(Task $task)

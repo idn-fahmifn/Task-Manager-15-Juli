@@ -47,9 +47,9 @@
 
                     @forelse ($tasks as $task)
                     <tr>
-                        <td class="px-5 py-3 font-medium">{{$task->nama_task}}</td>
-                        <td class="px-5 py-3 font-medium">{{$task->status}}</td>
-                        <td class="px-5 py-3 font-medium">{{$task->prioritas}}</td>
+                        <td class="px-5 py-3 font-medium">{{$task->title}}</td>
+                        <td class="px-5 py-3 font-medium">{{$task->assignee->name }}</td>
+                        <td class="px-5 py-3 font-medium">{{$task->priority}}</td>
                     </tr>
                     @empty
 
@@ -117,7 +117,7 @@
 
                     <div class="py-2 mt-2">
                         <flux:button variant="primary" @click="showModal = false">Batal</flux:button>
-                        <flux:button variant="primary" wire:click="save">Buat Task</flux:button>
+                        <flux:button variant="primary" @click="showModal = false" wire:click="save">Buat Task</flux:button>
                     </div>
                 </form>
 
