@@ -25,6 +25,10 @@
                     wire:navigate>
                     {{ __('Tasks') }}
                 </flux:sidebar.item>
+                <flux:sidebar.item icon="view-columns" :href="route('admin.board')" :current="request()->routeIs('admin.board')"
+                    wire:navigate>
+                    {{ __('Boards') }}
+                </flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
 

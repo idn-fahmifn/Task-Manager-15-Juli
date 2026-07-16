@@ -4,10 +4,7 @@
         <div class="flex justify-between">
             <div class="">
                 <flux:heading size="xl"> Papan Task </flux:heading>
-                <flux:text class="mt-1">Geser kartu untuk mengelola tugas</flux:text>
-            </div>
-            <div class="">
-                <flux:button variant="primary" icon="plus-circle" @click="showModal = true">Buat</flux:button>
+                <flux:text csayaalass="mt-1">Geser kartu untuk mengelola tugas</flux:text>
             </div>
         </div>
 
@@ -42,19 +39,14 @@
 
                 <div class="kolom-kanban space-y-2 min-h-[120px] mt-4" data-status="{{$key}}">
                     @foreach ($data['cards'] as [$judul, $prioritas, $classPrioritas, $assign])
-                    <div class="rounded-xl border border-neutral-300 dark:border-neutral-500 p-5">
+                    <div class="rounded-xl bg-neutral-100 dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-500 p-5">
                         <p class="text-sm">Total Task</p>
                         <p class="text-3xl text-bold mt-2">10</p>
                     </div>
                     @endforeach
                 </div>
             </div>
-
-
-
             @endforeach
-
-
         </div>
 
     </div>

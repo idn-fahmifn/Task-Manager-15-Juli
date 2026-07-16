@@ -59,4 +59,25 @@ class User extends Authenticatable implements PasskeyUser
             ? Str::substr($initials, 0, 1).Str::substr($initials, -1)
             : $initials;
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'assign_to');
+    }
+
+    public function createdTask()
+    {
+        return $this->hasMany(Task::class, 'created_by');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isTeam(): bool
+    {
+        return $this->role === 'team';
+    }
+    
 }

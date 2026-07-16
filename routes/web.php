@@ -2,11 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Livewire\Admin\Taskmanager;
+
 Route::view('/', 'welcome')->name('home');
 
-Route::middleware(['auth', 'verified', 'role'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::view('dashboard', 'admin.dashboard')->name('dashboard');
-    Route::view('tasks', 'admin.tasks')->name('admin.task');
+    Route::get('tasks', Taskmanager::class)->name('admin.task');
     Route::view('boards', 'admin.board')->name('admin.board');
 });
 
