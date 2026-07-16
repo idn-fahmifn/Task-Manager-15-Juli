@@ -3,7 +3,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         @foreach ($columns as $statusKey => $statusLabel)
-            <div class="bg-gray-100 rounded-xl p-3">
+            <div class="bg-gray-100 dark:bg-neutral-500 rounded-xl p-3">
                 <h2 class="font-semibold text-gray-700 mb-3 px-1">
                     {{ $statusLabel }}
                     <span class="text-xs text-gray-400">({{ ($tasks[$statusKey] ?? collect())->count() }})</span>
@@ -13,10 +13,10 @@
                 <div class="kanban-column space-y-2 min-h-[100px]"
                      data-status="{{ $statusKey }}">
                     @foreach ($tasks[$statusKey] ?? [] as $task)
-                        <div class="kanban-card bg-white rounded-lg shadow p-3 cursor-move"
+                        <div class="kanban-card bg-white dark:bg-neutral-800 rounded-lg shadow p-3 cursor-move"
                              data-id="{{ $task->id }}"
                              wire:key="task-{{ $task->id }}">
-                            <p class="font-medium text-gray-800 text-sm">{{ $task->title }}</p>
+                            <p class="font-medium text-gray-800 dark:text-gray-200 text-sm">{{ $task->title }}</p>
                             <div class="flex items-center justify-between mt-2">
                                 <span class="text-xs px-2 py-0.5 rounded-full
                                     @class([
