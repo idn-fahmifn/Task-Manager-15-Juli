@@ -41,7 +41,7 @@ class Taskmanager extends Component
     public function save() :void
     {
         $data = $this->validate();
-        dd($data);
+        dd($this);
     }
 
     public function delete(Task $task)

@@ -43,7 +43,7 @@
                 </thead>
                 <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
 
-                    
+
 
                     @forelse ($tasks as $task)
                     <tr>
@@ -72,48 +72,51 @@
                     <div class="py-2 mt-2">
                         <flux:input label="Judul Task" wire:model="title" required placeholder="Masukan nama task" />
                         @error('title')
-                            <span class="text-red-500">{{$message}}</span>
+                        <span class="text-red-500">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="py-2 mt-2">
                         <flux:select label="Tugaskan Ke" wire:model="assign_to">
+                            <option value="">Pilih Penerima</option>
                             @foreach ($members as $member)
-                                <option value="{{$member->id}}">{{$member->name}}</option>
+                            <option value="{{$member->id}}">{{$member->name}}</option>
                             @endforeach
                         </flux:select>
                         @error('assign_to')
-                            <span class="text-red-500">{{$message}}</span>
+                        <span class="text-red-500">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="py-2 mt-2">
                         <flux:select label="Prioritas" wire:model="priority">
+                            <option value="" disabled>Priotas</option>
                             @foreach ($priorities as $key => $label)
-                                <option value="{{$key}}">{{$label}}</option>
+                            <option value="{{$key}}">{{$label}}</option>
                             @endforeach
                         </flux:select>
                         @error('priority')
-                            <span class="text-red-500">{{$message}}</span>
+                        <span class="text-red-500">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="py-2 mt-2">
                         <flux:select label="Status" wire:model="status">
+                            <option value="" disabled>Penerima</option>
                             @foreach ($statuses as $key => $label)
-                                <option value="{{$key}}">{{$label}}</option>
+                            <option value="{{$key}}">{{$label}}</option>
                             @endforeach
                         </flux:select>
                         @error('status')
-                            <span class="text-red-500">{{$message}}</span>
+                        <span class="text-red-500">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="py-2 mt-2">
                         <flux:textarea label="Deskripsi Tugas" wire:model="desc"></flux:textarea>
                         @error('desc')
-                            <span class="text-red-500">{{$message}}</span>
+                        <span class="text-red-500">{{$message}}</span>
                         @enderror
                     </div>
 
                     <div class="py-2 mt-2">
-                        <flux:button variant="primary" @click="showModal = false" >Batal</flux:button>
+                        <flux:button variant="primary" @click="showModal = false">Batal</flux:button>
                         <flux:button variant="primary" wire:click="save">Buat Task</flux:button>
                     </div>
                 </form>
@@ -123,4 +126,3 @@
     </div>
 
     <!-- modal area -->
-
