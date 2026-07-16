@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Admin;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\{Task, User};
 use Livewire\Component;
 use Livewire\Attributes\{Layout, Validate};
@@ -34,21 +36,38 @@ class Taskmanager extends Component
         $this->showModal = true; 
     }
 
-    public function edit(Task $task)
+    public function edit(Task $task) :void
     {
-        // 
+        $this->editingId = $task->id;
+        $this->title = $task->title;
+        $this->desc = $task->desc;
+        $this->status = $task->status;
+        $this->priority = $task->priority;
+        $this->assign_to = $task->assign_to;
+
+        $this->showModal = true;
     }
 
     public function save() :void
     {
         $data = $this->validate();
-        Task::create($data);
+
+        if($this->editingId){
+            Task::findOrFail($this->editingId)->update($data);
+        } else {
+            $data['created'] = Auth::id();
+            Task::create($data);
+        }
+
+        $this->showModal = false;
         session()->flash('message', 'Task berhasil disimpan');
+
     }
 
     public function delete(Task $task)
     {
-        // 
+        $task->delete();
+        session()->flash('message', 'Task Dihapus'); 
     }
 
     public function render()

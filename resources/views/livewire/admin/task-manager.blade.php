@@ -82,9 +82,7 @@
                 <form action="">
                     <div class="py-2 mt-2">
                         <flux:input label="Judul Task" wire:model="title" required placeholder="Masukan nama task" />
-                        @error('title')
-                        <span class="text-red-500">{{$message}}</span>
-                        @enderror
+                        
                     </div>
                     <div class="py-2 mt-2">
                         <flux:select label="Tugaskan Ke" wire:model="assign_to">
@@ -93,9 +91,6 @@
                             <option value="{{$member->id}}">{{$member->name}}</option>
                             @endforeach
                         </flux:select>
-                        @error('assign_to')
-                        <span class="text-red-500">{{$message}}</span>
-                        @enderror
                     </div>
                     <div class="py-2 mt-2">
                         <flux:select label="Prioritas" wire:model="priority">
@@ -104,9 +99,6 @@
                             <option value="{{$key}}">{{$label}}</option>
                             @endforeach
                         </flux:select>
-                        @error('priority')
-                        <span class="text-red-500">{{$message}}</span>
-                        @enderror
                     </div>
                     <div class="py-2 mt-2">
                         <flux:select label="Status" wire:model="status">
@@ -115,20 +107,15 @@
                             <option value="{{$key}}">{{$label}}</option>
                             @endforeach
                         </flux:select>
-                        @error('status')
-                        <span class="text-red-500">{{$message}}</span>
-                        @enderror
                     </div>
                     <div class="py-2 mt-2">
                         <flux:textarea label="Deskripsi Tugas" wire:model="desc"></flux:textarea>
-                        @error('desc')
-                        <span class="text-red-500">{{$message}}</span>
-                        @enderror
                     </div>
 
                     <div class="py-2 mt-2">
-                        <flux:button variant="primary" @click="showModal = false">Batal</flux:button>
-                        <flux:button variant="primary" @click="showModal = false" wire:click="save">Buat Task
+                        <flux:button variant="primary" wire:click="$set('showModal', false)">Batal</flux:button>
+                        <flux:button variant="primary"  wire:click="save">
+                            {{ $editingId ? 'Simpan Perubahan' : 'Buat Task' }}
                         </flux:button>
                     </div>
                 </form>
