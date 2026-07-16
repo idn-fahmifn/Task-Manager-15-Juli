@@ -1,20 +1,15 @@
 <x-layouts::app :title="__('Tasks')">
     <div class="p-6 space-y-6" x-data="{showModal: false}">
 
-
-
         <div class="flex justify-between">
             <div class="">
                 <flux:heading size="xl"> Halaman Task </flux:heading>
                 <flux:text class="mt-1">Semua data tugas (Tasks)</flux:text>
             </div>
             <div class="">
-                <flux:button variant="primary" icon="plus-circle" x-on:click="showModal = true">Buat</flux:button>
+                <flux:button variant="primary" icon="plus-circle" @click="showModal = true">Buat</flux:button>
             </div>
         </div>
-
-
-
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="rounded-xl border border-neutral-300 dark:border-neutral-500 p-5">
@@ -133,7 +128,38 @@
                 </tbody>
             </table>
         </div>
+        <div x-show="showModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+            x-on:click.self="showModal = false">
+            <div class="w-full max-w-lg rounded-lg bg-white dark:bg-neutral-700 p-6 space-y-4 shadow-lg">
+                <flux:heading size="xl"> Task Baru </flux:heading>
+                <flux:text class="mt-1">Buat Task baru</flux:text>
 
+                <form action="">
+                    <div class="py-2 mt-2">
+                        <flux:input label="Judul Task" name="title" required placeholder="Masukan nama task" />
+                    </div>
+                    <div class="py-2 mt-2">
+                        <flux:select label="Prioritas" name="priority">
+                            <option value="low">low</option>
+                            <option value="medium">medium</option>
+                            <option value="high">High</option>
+                        </flux:select>
+                    </div>
+                    <div class="py-2 mt-2">
+                        <flux:textarea label="Deskripsi Tugas" name="desc"></flux:textarea>
+                    </div>
+
+                    <div class="py-2 mt-2">
+                        <flux:button variant="primary" @click="showModal = false" >Batal</flux:button>
+                        <flux:button type="submit" variant="primary">Buat Task</flux:button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
+
+    <!-- modal area -->
+
 
 </x-layouts::app>
