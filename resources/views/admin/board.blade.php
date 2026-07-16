@@ -60,33 +60,43 @@
     </div>
 
     <!-- Always gets the latest version -->
-    <script src="https://jsdelivr.net"></script>
 
     <!-- Specific stable version (Recommended for production) -->
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.7/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
     <script>
-        function initKanban() {
-            if (typeof Sortable === 'undefined') {
-                console.error('Sortable belum dipakai')
-            }
+        document.addEventListener("DOMContentLoaded", function () {
+    // Mengambil semua elemen kolom kanban
+    const kolomKanban = document.querySelectorAll('.kolom-kanban');
 
-            document.querySelectorAll('kolom-kanban').forEach(col => {
-                // menghindari init ganda
-                if (col._sortable) return;
-                col._sortable = Sortable.create(col, {
-                    group: 'kanban',
-                    animation: 150,
-                    ghostClass: 'opacity-40'
-                });
-                console.log('Kanban sudah aktif', col.dataset.status)
-            })
+    kolomKanban.forEach(kolom => {
+        new Sortable(kolom, {
+            group: 'kanban-board', // Mengizinkan perpindahan antar kolom dengan group yang sama
+            animation: 150,        // Durasi animasi perpindahan (milidetik)
+            ghostClass: 'bg-neutral-200', // Class visual saat kartu sedang ditarik (opsional)
+            
+            // Event saat kartu selesai dilepas/dipindah
+            onEnd: function (evt) {
+                const itemEl = evt.item;          // Elemen kartu yang dipindah
+                const targetColumn = evt.to;      // Kolom tujuan baru
+                const fromColumn = evt.from;      // Kolom asal sebelum dipindah
+                
+                // Mengambil status/key dari atribut data-status
+                const newStatus = targetColumn.getAttribute('data-status');
+                const oldStatus = fromColumn.getAttribute('data-status');
+                
+                // Logika jika kartu benar-benar berpindah kolom
+                if (newStatus !== oldStatus) {
+                    console.log(`Kartu dipindah ke status: ${newStatus}`);
+                    
+                    // TODO: Kirim data ke backend menggunakan Fetch API atau Axios
+                    // updateStatusDiBackend(itemEl.dataset.id, newStatus);
+                }
+            },
+        });
+    });
+});
 
-            // berjalan saat load 
-            document.addEventListener('DOMContentLoaded', initKanban);
-            document.addEventListener('livewire:navigated', initKanban);
-
-        }
 
     </script>
 
